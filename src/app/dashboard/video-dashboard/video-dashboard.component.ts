@@ -18,8 +18,8 @@ export class VideoDashboardComponent implements OnInit,OnDestroy {
   constructor(public httpClient: HttpClient) { }
   
   ngOnInit(): void {
-    this.subscription = this.httpClient.get('https://api.angularbootcamp.com/videos')
-      .subscribe(videos => (this.videoList = <Video[]>(videos)));
+    this.subscription = this.httpClient.get<Video[]>('https://api.angularbootcamp.com/videos')
+      .subscribe(videos => (this.videoList = videos));
   }
 
   ngOnDestroy(): void {
