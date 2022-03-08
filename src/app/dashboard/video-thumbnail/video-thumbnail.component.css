@@ -1,0 +1,8 @@
+.selected{
+    background-color:rgb(102,51,153,.5);
+}
+
+.card{
+    padding:10px 10px 10px 10px;
+    margin:10px 10px 10px 10px;
+}

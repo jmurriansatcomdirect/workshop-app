@@ -1,0 +1,3 @@
+<app-video-thumbnail *ngFor="let video of videos" (click)="selectVideo(video)" [video]="video"
+    [selected]="selectedVideo?.title === video.title">
+</app-video-thumbnail>
