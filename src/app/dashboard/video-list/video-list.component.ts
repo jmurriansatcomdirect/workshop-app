@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Observable } from 'rxjs';
 import { Video } from 'src/app/types';
 
 
@@ -9,7 +10,7 @@ import { Video } from 'src/app/types';
 })
 export class VideoListComponent implements OnInit {
 
-@Input()  videos : Video[] | undefined;
+@Input()  videos : Observable<Video[]> | undefined;
 @Output() selectedVideoChange: EventEmitter<Video> = new EventEmitter<Video>();
 @Input() selectedVideo:Video | undefined;
 

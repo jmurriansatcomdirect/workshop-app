@@ -1,6 +1,6 @@
 import { ThisReceiver } from '@angular/compiler';
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Observable, Subject, Subscription, takeUntil } from 'rxjs';
+import { last, map, Observable, Subject, Subscription, takeUntil, tap } from 'rxjs';
 import { VideoService } from 'src/app/service/video-service';
 import { Video } from 'src/app/types';
 
@@ -12,20 +12,19 @@ import { Video } from 'src/app/types';
 export class VideoDashboardComponent implements OnInit, OnDestroy {
 
   public selectedVideo: Video | undefined;
-  public videoList: Video[] | undefined;
-  loading:boolean=false;
-  private unsubscribe:Subject<any> = new Subject<any>();
-  
-  constructor(public videoService:VideoService) { }
+  public videoList: Observable<Video[]> | undefined;
+  loading: boolean = false;
+  private unsubscribe: Subject<any> = new Subject<any>();
+
+  constructor(public videoService: VideoService) { }
 
   ngOnInit(): void {
-    this.loading=true;
-    this.videoService.getVideos()
-    .pipe(takeUntil(this.unsubscribe))
-      .subscribe(videos => {
-        this.videoList = videos;
-        this.loading=false;
-      });
+    this.loading = true;
+    this.videoList = this.videoService.getVideos().pipe(
+    takeUntil(this.unsubscribe),
+    last(),
+    tap(_=> this.loading=false)
+    );
   }
 
   ngOnDestroy(): void {
