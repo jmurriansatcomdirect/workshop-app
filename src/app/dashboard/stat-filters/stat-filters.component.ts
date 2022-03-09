@@ -19,7 +19,7 @@ export class StatFiltersComponent implements OnInit {
       title: [''],
       author: ['']
     });
-    this.statFilterForm.valueChanges.pipe(debounceTime(200)).subscribe(filter=>this.videoService.setFilter(filter));
+    this.statFilterForm.valueChanges.pipe(debounceTime(500)).subscribe(filter=>this.videoService.setFilter(filter));
   }
 
 }
