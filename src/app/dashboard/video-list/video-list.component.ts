@@ -10,8 +10,8 @@ import { Video } from 'src/app/types';
 export class VideoListComponent implements OnInit {
 
 @Input()  videos : Video[] | undefined;
-@Output() videoSelected: EventEmitter<Video> = new EventEmitter;
-selectedVideo:Video | undefined;
+@Output() selectedVideoChange: EventEmitter<Video> = new EventEmitter<Video>();
+@Input() selectedVideo:Video | undefined;
 
   constructor() { }
 
@@ -20,7 +20,7 @@ selectedVideo:Video | undefined;
 
   selectVideo(video:Video){
     this.selectedVideo = video;
-    this.videoSelected.emit(video);
+    this.selectedVideoChange.emit(this.selectedVideo);
   }
 
 }
