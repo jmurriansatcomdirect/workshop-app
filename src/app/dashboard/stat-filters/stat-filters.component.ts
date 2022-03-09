@@ -1,4 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { debounceTime, Observable } from 'rxjs';
+import { VideoService } from 'src/app/service/video-service';
+
 
 @Component({
   selector: 'app-stat-filters',
@@ -7,9 +11,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class StatFiltersComponent implements OnInit {
 
-  constructor() { }
+  statFilterForm: FormGroup = new FormGroup({});
+  constructor(public formBuilder: FormBuilder,public videoService:VideoService) { }
 
   ngOnInit(): void {
+    this.statFilterForm = this.formBuilder.group({
+      title: [''],
+      author: ['']
+    });
+    this.statFilterForm.valueChanges.pipe(debounceTime(200)).subscribe(filter=>this.videoService.setFilter(filter));
   }
 
 }
