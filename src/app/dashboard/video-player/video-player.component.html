@@ -1,2 +1,11 @@
 <app-video-thumbnail [video]="video"></app-video-thumbnail>
+<div class="video-container z-depth-2" *ngIf="url">
+    <iframe
+      width="560"
+      height="315"
+      [src]="url"
+      allowfullscreen
+      title="Video Container"
+    ></iframe>
+  </div>
 
