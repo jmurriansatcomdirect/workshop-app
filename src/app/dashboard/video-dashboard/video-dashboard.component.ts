@@ -20,11 +20,13 @@ export class VideoDashboardComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.loading = true;
-    this.videoList = this.videoService.getVideos().pipe(
-    takeUntil(this.unsubscribe),
-    last(),
-    tap(_=> this.loading=false)
+    this.videoList = this.videoService.filteredVideos.pipe(
+      takeUntil(this.unsubscribe),
+      tap(_=>this.loading=false)
     );
+    
+    
+
   }
 
   ngOnDestroy(): void {
