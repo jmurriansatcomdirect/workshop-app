@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Observable } from 'rxjs';
+import { ActivatedRoute, Router } from '@angular/router';
+import { map, Observable, tap } from 'rxjs';
 import { Video } from 'src/app/types';
 
 
@@ -11,17 +12,20 @@ import { Video } from 'src/app/types';
 export class VideoListComponent implements OnInit {
 
 @Input()  videos : Observable<Video[]> | undefined;
-@Output() selectedVideoChange: EventEmitter<Video> = new EventEmitter<Video>();
-@Input() selectedVideo:Video | undefined;
+id:string | null=null;
 
-  constructor() { }
+  constructor(public router:Router,public activatedRoute:ActivatedRoute) { }
 
   ngOnInit(): void {
+    this.activatedRoute.queryParamMap.pipe(map(q=> q.get('id')),
+    tap(id=> this.id = id)
+    ).subscribe(_=>{});
   }
 
   selectVideo(video:Video){
-    this.selectedVideo = video;
-    this.selectedVideoChange.emit(this.selectedVideo);
+    let id: string = this.id = video.id;
+    const queryParams = {id};
+    this.router.navigate([],{queryParams});
   }
 
 }

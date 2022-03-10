@@ -22,6 +22,10 @@ export class VideoService {
     return this.httpClient.get<Video[]>('https://api.angularbootcamp.com/videos');
   }
 
+  public getVideo(id:string | null): Observable<Video> {
+    return this.httpClient.get<Video>(`https://api.angularbootcamp.com/videos/${id}`);
+  }
+
   public setFilter(filter: FilterCriteria) {
     this.filter.next(filter);
   }
